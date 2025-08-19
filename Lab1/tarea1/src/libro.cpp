@@ -10,54 +10,69 @@ struct rep_libro {
 };
 
 // Crea y retorna un elemento de tipo TLibro con los valores dados
-TLibro crearTLibro(int isbn, const char titulo[MAX_TITULO], const char nombreAutor[MAX_NOMBRE_AUTOR], const char apellidoAutor[MAX_APELLIDO_AUTOR], const char descripcion[MAX_DESCRIPCION], int idGeneroLibro, TFecha fechaEdicion){
-    TFecha nuevaFecha = new rep_fecha;
-    return NULL;
+TLibro crearTLibro( int isbn,
+                    const char titulo[MAX_TITULO],
+                    const char nombreAutor[MAX_NOMBRE_AUTOR],
+                    const char apellidoAutor[MAX_APELLIDO_AUTOR],
+                    const char descripcion[MAX_DESCRIPCION],
+                    int idGeneroLibro,
+                    TFecha fechaEdicion) {
+    TLibro nuevoLibro = new rep_libro;
+    nuevoLibro->isbn = isbn;
+    strcpy(nuevoLibro->titulo, titulo);
+    strcpy(nuevoLibro->nombreAutor, nombreAutor);       
+    strcpy(nuevoLibro->apellidoAutor, apellidoAutor);
+    strcpy(nuevoLibro->descripcion, descripcion);
+    nuevoLibro->idGeneroLibro = idGeneroLibro;
+    nuevoLibro->fechaEdicion = fechaEdicion;
+    return nuevoLibro;
 }
 
 // Libera la memoria asignada para el libro 'l'
 // Debe liberar también la memoria de la fecha asociada
 void liberarTLibro(TLibro &l){
+    delete l;
+    l = NULL;
 }
 
 // Retorna el isbn del libro 'l'
 int isbnTLibro(TLibro l){
-    return 0;
+    return l->isbn;
 }
 
 // Retorna el titulo del libro 'l'
 // El titulo retornado comparte memoria con el parámetro. 
 char* tituloTLibro(TLibro l){
-    return NULL;
+    return l->titulo;
 }
 
 // Retorna la descripción del libro 'l'
 // La descripción retornada comparte memoria con el parámetro. 
 char* descripcionTLibro(TLibro l){
-    return NULL; 
+    return l->descripcion;
 }
 
 // Retorna el nombre del autor del libro 'l'
 // El nombre retornado comparte memoria con el parámetro. 
 char* nombreAutorTLibro(TLibro l){
-    return NULL;
+    return l->nombreAutor;
 }
 
 // Retorna el apellido del autor del libro 'l'
 // El apellido retornado comparte memoria con el parámetro. 
 char* apellidoAutorTLibro(TLibro l){
-    return NULL;
+    return l->apellidoAutor;
 }
 
 // Retorna el id del género del libro 'l'
 int idGeneroTLibro(TLibro l){
-    return 0;
+    return l->idGeneroLibro;
 }
 
 // Retorna la fecha de edición del libro 'l'.
 // La fecha retornada comparte memoria con el parámetro. 
 TFecha fechaEdicionTLibro(TLibro l){
-    return NULL;
+    return l->fechaEdicion;
 }
 
 // Imprime la información del libro 'l' en el siguiente formato:
@@ -68,10 +83,24 @@ TFecha fechaEdicionTLibro(TLibro l){
 // Género: <id género>
 // Fecha de edición: <fecha de edición>
 void imprimirTLibro(TLibro l){
-    
+    printf("Libro %d\n", isbnTLibro(l));
+    printf("Título: %s\n", tituloTLibro(l));
+    printf("Autor: %s %s\n", nombreAutorTLibro(l), apellidoAutorTLibro(l));
+    printf("Descripción: %s\n", descripcionTLibro(l));
+    printf("Género: %d\n", idGeneroTLibro(l));
+    printf("Fecha de edición:");
+    imprimirTFecha(fechaEdicionTLibro(l));
 }
 
 // Retorna una copia del libro 'l' que no comparte memoria con el parámetro.
 TLibro copiarTLibro(TLibro l){
-    return NULL;
+    TLibro copia = new rep_libro;
+    copia->isbn = l->isbn;
+    strcpy(copia->titulo, l->titulo);
+    strcpy(copia->nombreAutor, l->nombreAutor);
+    strcpy(copia->apellidoAutor, l->apellidoAutor);
+    strcpy(copia->descripcion, l->descripcion);
+    copia->idGeneroLibro = l->idGeneroLibro;
+    copia->fechaEdicion = copiarTFecha(l->fechaEdicion);
+    return copia;
 }
