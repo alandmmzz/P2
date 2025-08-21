@@ -38,7 +38,6 @@ void agregarEnTColeccion(TColeccion& c, TLibro l);
 // El formato en el que se debe imprimir la información de la colección es utilizando de 
 // forma secuencial la función imprimirTLibro
 // 
-// Colección de libros:
 // Libro <isbn 1> 
 // Título: <título 1>
 // Autor: <nombre autor 1> <apellido autor 1>
@@ -52,7 +51,7 @@ void agregarEnTColeccion(TColeccion& c, TLibro l);
 // Género: <id género 2>
 // Fecha de edición: <fecha de edición 2>
 // .... 
-// Si la colección está vacía solo imprime el cabezal.
+// Si la colección está vacía no se imprime nada.
 void imprimirTColeccion(TColeccion c);
 
 // Función para verificar si un libro con isbn 'isbn' existe en la colección 'c' 

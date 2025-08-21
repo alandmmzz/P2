@@ -100,7 +100,10 @@ IDS_PUBLICOS = fecha1-crear-imprimir-liberar \
 		       coleccion5-remover \
 		       coleccion6-combinado
 
-IDS_PRIVADOS = 
+IDS_PRIVADOS = fecha6-privado \
+			   libro3-privado \
+			   coleccion7-privado \
+		       coleccion8-privado
 
 CASOS = $(IDS_PUBLICOS) $(IDS_PRIVADOS)		
 # cadena de archivos, con directorio y extensión

@@ -89,7 +89,7 @@ int main() {
         // procesar el comando
         if (cmd_es("Fin", cmd)) {  // Termina el programa
             seguir = false;
-            printf("Chau mundo.\n");
+            printf("Fin.\n");
 
         } else if (cmd_es("#", cmd)) {  // Imprime el comentario luego del #
             leerRestoLinea(restoLinea);

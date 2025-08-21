@@ -31,6 +31,7 @@ TLibro crearTLibro( int isbn,
 // Libera la memoria asignada para el libro 'l'
 // Debe liberar también la memoria de la fecha asociada
 void liberarTLibro(TLibro &l){
+    liberarTFecha(l->fechaEdicion);
     delete l;
     l = NULL;
 }

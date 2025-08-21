@@ -131,10 +131,12 @@ void imprimirLibrosGeneroTColeccion(TColeccion c, int idGenero){
 void removerDeTColeccion(TColeccion& c, int isbn){
     int i;
     for (i = 0; i < c->tope && isbnTLibro(c->libros[i]) != isbn; i++);
+    liberarTLibro(c->libros[i]);  // 🔥 liberar el libro eliminado
     for (int j = i; j < c->tope - 1; j++) {
         c->libros[j] = c->libros[j + 1];
     }
     c->libros[c->tope - 1] = NULL;
     c->tope--;
 }
+
 
