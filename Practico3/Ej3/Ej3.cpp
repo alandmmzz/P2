@@ -52,98 +52,80 @@ bool esElemento(lista l, int x) {
     return (l != NULL);
 }
 
-lista intercalarConDummy(lista l, lista p) {
-    if (l == NULL && p == NULL) { // Dummy->sig da null, se puede sacar
-        return NULL;
-    } else {
-        lista nuevaLista, aux, dummy;
-        dummy = new nodo;
-        aux = dummy;
-        while (l != NULL && p != NULL) {
-            aux->sig = new nodo;
-            aux = aux->sig;
-            if (l->elem < p->elem) {
-                aux->elem = l->elem;
-                l = l->sig;
+lista removerOcurrencias(lista &l, int x) {
+    lista aBorrar, aux = NULL;
+    aux = l;
+    while (aux != NULL) {
+        if (aux->elem == x) {
+            aBorrar = aux;
+            if (aux->ant != NULL) {
+                aux->ant->sig = aux->sig;
             } else {
-                aux->elem = p->elem;
-                p = p->sig;
+                l = aux->sig;
             }
-        }
-        while (l != NULL) {
-            aux->sig = new nodo;
-            aux = aux->sig;
-            aux->elem = l->elem;
-            l = l->sig;
-        }
-        while (p != NULL) {
-            aux->sig = new nodo;
-            aux = aux->sig;
-            aux->elem = p->elem;
-            p = p->sig;
-        }
-        aux->sig = NULL;
-        nuevaLista = dummy->sig;
-        delete dummy;
-        return nuevaLista;
-    }
-}
-
-lista concatenar(lista l, lista p) {
-    if (l == NULL && p == NULL) {
-        return NULL;
-    } else {
-        lista nuevaLista, aux;
-        nuevaLista = new nodo;
-        if (l != NULL) {
-            nuevaLista->elem = l->elem;
-            l = l->sig;
-            aux = nuevaLista;
-            while (l != NULL) {
-                aux->sig = new nodo;
-                aux = aux->sig;
-                aux->elem = l->elem;
-                l = l->sig;
+            if (aux->sig != NULL) {
+                aux->sig->ant = aux->ant;
             }
+            aux = aux->sig;
+            delete aBorrar;
         } else {
-            nuevaLista->elem = p->elem;
-            p = p->sig;
-            aux = nuevaLista;
-        }
-        while (p != NULL) {
-            aux->sig = new nodo;
             aux = aux->sig;
-            aux->elem = p->elem;
-            p = p->sig;
         }
-        aux->sig = NULL;
-        return nuevaLista;
     }
+    return l;
 }
 
-lista concatenarConDummy(lista l, lista p) {
-    lista dummy = new nodo;
-    lista aux = dummy;
-
-    while (l != NULL) {
-        aux->sig = new nodo;
-        aux = aux->sig;
-        aux->elem = l->elem;
-        l = l->sig;
+lista insOrd(lista &l, int x) {
+    lista nuevo, aux = NULL;
+    aux = l;
+    nuevo = new nodo_doble;
+    nuevo->elem = x;
+    if (aux == NULL ) {
+        nuevo->ant = NULL;
+        nuevo->sig = NULL;
+        l = nuevo;
+        return l;
     }
-
-    while (p != NULL) {
-        aux->sig = new nodo;
-        aux = aux->sig;
-        aux->elem = p->elem;
-        p = p->sig;
+    if (aux->elem > x ) {
+        nuevo->ant = NULL;
+        nuevo->sig = aux;
+        aux->ant = nuevo;
+        l = nuevo;
+        return l;
     }
-
-    aux->sig = NULL;
-    lista nuevaLista = dummy->sig;
-    delete dummy;
-    return nuevaLista;
+    while (aux->sig != NULL && aux->sig->elem < x) {
+        aux = aux->sig;
+    }
+    if (aux->sig != NULL) {
+        aux->sig->ant = nuevo;
+        nuevo->ant = aux;
+        nuevo->sig = aux->sig;
+        aux->sig = nuevo;
+    } else {
+        nuevo->sig = NULL;
+        nuevo->ant = aux;
+        aux->sig = nuevo;
+    }
+    return l;
 }
+
+lista remomverUltimo(lista &l) {
+    lista aBorrar, aux = NULL;
+    aux = l;
+    if (l == NULL) {
+        return NULL;
+    }
+    while (aux->sig != NULL ) {
+        aux = aux->sig;
+    }
+    aBorrar = aux;
+    if (aux->ant != NULL) {
+        aux->ant->sig = aux->sig;
+    }
+    delete aBorrar;
+    return l;
+}
+
 
 void imprimirLista(lista l) {
     while(l) {
