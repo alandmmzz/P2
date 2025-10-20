@@ -4,13 +4,52 @@
 
 
 struct rep_agGeneros {
+    int id;
+    char nombre[MAX_NOMBRE];
+    rep_agGeneros * sH;
+    rep_agGeneros * pH;
 };
 
 TAGGeneros crearTAGGeneros(){
-  return NULL;
+    return NULL;
 }
 
 void insertarGeneroTAGGeneros(TAGGeneros &arbolGeneros, int idGeneroPadre, int idGenero, const char nombreGenero[MAX_NOMBRE] ){
+    if (arbolGeneros == NULL) {
+        if (idGeneroPadre == -1) {
+            TAGGeneros nuevoNodo = new rep_agGeneros;
+            nuevoNodo->id = idGenero;
+            strcpy(nuevoNodo->nombre, nombreGenero);
+            nuevoNodo->sH = NULL;
+            nuevoNodo->pH = NULL;
+            arbolGeneros = nuevoNodo;
+        } else return;
+    }
+    if (idGeneroPadre == -1) {
+        TAGGeneros nuevoNodo = new rep_agGeneros;
+        nuevoNodo->id = idGenero;
+        strcpy(nuevoNodo->nombre, nombreGenero);
+        nuevoNodo->sH = NULL;
+        nuevoNodo->pH = arbolGeneros;
+        arbolGeneros = nuevoNodo;
+        return;
+    } else if (idGeneroPadre == arbolGeneros->id) {
+        TAGGeneros nuevoNodo = new rep_agGeneros;
+        nuevoNodo->id = idGenero;
+        strcpy(nuevoNodo->nombre, nombreGenero);
+        nuevoNodo->pH = NULL;
+        if (arbolGeneros->pH != NULL) {
+            TAGGeneros aux = arbolGeneros->pH;
+            nuevoNodo->sH = aux;
+        } else {
+            nuevoNodo->sH = NULL;
+        }
+        arbolGeneros->pH = nuevoNodo;
+        return;
+    } else {
+        insertarGeneroTAGGeneros(arbolGeneros->pH, idGeneroPadre, idGenero, nombreGenero );
+        insertarGeneroTAGGeneros(arbolGeneros->sH, idGeneroPadre, idGenero, nombreGenero );
+    }
 }
 
 void imprimirTAGGeneros(TAGGeneros arbolGeneros){
