@@ -59,7 +59,7 @@ void imprimirTConjuntoGeneros(TConjuntoGeneros c){
             }
         }
     }
-    if (yaImprimio) printf("\n");
+    printf("\n");
 }
 
 void liberarTConjuntoGeneros(TConjuntoGeneros &c){
