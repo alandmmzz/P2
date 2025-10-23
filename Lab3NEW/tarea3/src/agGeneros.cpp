@@ -124,35 +124,20 @@ TAGGeneros obtenerSubarbolTAGGeneros(TAGGeneros arbolGeneros, int idGenero) {
 }
 
 TConjuntoGeneros obtenerConjuntoGeneros(TAGGeneros arbol, int idGenero) {
-    if (!arbol) return crearTConjuntoGeneros(0);
-
-    if (arbol->id == idGenero) {
-        TConjuntoGeneros conjunto = crearTConjuntoGeneros(obtenerMaxTAGGeneros(arbol));
-        // Insertar el nodo actual
-        insertarTConjuntoGeneros(conjunto, arbol->id);
-
-        // Recorrer todos los hijos
-        TAGGeneros hijo = arbol->pH;
-        while (hijo) {
-            TConjuntoGeneros subConjunto = obtenerConjuntoGeneros(hijo, hijo->id);
-            TConjuntoGeneros tmp = unionTConjuntoGeneros(conjunto, subConjunto);
-            liberarTConjuntoGeneros(conjunto);
-            liberarTConjuntoGeneros(subConjunto);
-            conjunto = tmp;
-            hijo = hijo->sH;
+    // creamos conjunto con capacidad suficiente
+    TConjuntoGeneros conjunto = crearTConjuntoGeneros(obtenerMaxTAGGeneros(arbol) + 1);
+    //creamos subarbol
+    TAGGeneros subarbol = obtenerSubarbolTAGGeneros(arbol, idGenero);
+    // si el subarbol es nulo, retornamos conjunto vacío
+    if (subarbol == NULL) return conjunto;
+    // recorremos todos los posibles ids y los insertamos si pertenecen al subarbol
+    for (int i = 0; i <= obtenerMaxTAGGeneros(arbol); i++) {
+        if (existeGeneroTAGGeneros(subarbol, i)) {
+            insertarTConjuntoGeneros(conjunto, i);
         }
-        return conjunto;
     }
-
-    // Buscar en subárbol de hijos
-    TConjuntoGeneros res = obtenerConjuntoGeneros(arbol->pH, idGenero);
-    if (cardinalTConjuntoGeneros(res) > 0) return res;
-
-    // Buscar en hermanos
-    return obtenerConjuntoGeneros(arbol->sH, idGenero);
+    return conjunto;
 }
-
-
 
 int obtenerMaxTAGGeneros(TAGGeneros arbolGeneros) {
     if (arbolGeneros == NULL ) return 0;
@@ -167,7 +152,6 @@ int obtenerMaxTAGGeneros(TAGGeneros arbolGeneros) {
     }
     return maxActual;
 }
-
 
 void removerGeneroTAGGeneros(TAGGeneros &arbolGeneros, int idGenero){
     if (arbolGeneros == NULL) return;

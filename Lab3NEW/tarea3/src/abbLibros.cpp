@@ -185,3 +185,14 @@ TABBLibros filtradoPorGeneroTABBLibros(TABBLibros abbLibros, int genero) {
         }
     }
 }
+
+TABBLibros unirTABBLibros(TABBLibros abb1, TABBLibros abb2) {
+    if (abb1 == NULL) return abb2;
+    if (abb2 == NULL) return abb1;
+
+    unirTABBLibros(abb1->izq, abb2);
+    insertarLibroTABBLibros(abb1, abb2->libro);
+    unirTABBLibros(abb1->der, abb2);
+
+    return abb1;
+}
