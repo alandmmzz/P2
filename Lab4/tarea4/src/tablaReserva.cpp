@@ -2,7 +2,15 @@
 
 // Se debe implementar mediante una tabla de dispersión abierta (hash)
 
+struct nodoTablaReserva {
+    nat isbn;
+    TColaDePrioridadReservas cp;
+    nodoTablaReserva *sig;
+};
+
 struct rep_tablaTablaReserva {
+    nodoTablaReserva **tabla;  
+    nat capacidad;
 };
 
 
