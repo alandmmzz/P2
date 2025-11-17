@@ -7,17 +7,15 @@ struct rep_socio {
     TFecha fechaAlta;
     int generosFavoritos[MAX_GENEROS_FAVORITOS];
     int generosTope;
-    nat rango;
 };
  
-TSocio crearTSocio(int ci, const char nombre[MAX_NOMBRE_SOCIO], const char apellido[MAX_APELLIDO_SOCIO], nat diaAlta, nat mesAlta, nat anioAlta, nat rango){
+TSocio crearTSocio(int ci, const char nombre[MAX_NOMBRE_SOCIO], const char apellido[MAX_APELLIDO_SOCIO], nat diaAlta, nat mesAlta, nat anioAlta){
     TSocio nuevoSocio = new rep_socio;
     nuevoSocio->ci = ci;
     strcpy(nuevoSocio->nombre, nombre);
     strcpy(nuevoSocio->apellido, apellido);
     nuevoSocio->fechaAlta = crearTFecha(diaAlta, mesAlta, anioAlta);
     nuevoSocio->generosTope = 0;
-    nuevoSocio->rango = rango;
     return nuevoSocio;
 }
 
@@ -40,10 +38,6 @@ void liberarTSocio(TSocio &socio){
 
 int ciTSocio(TSocio socio){
     return socio->ci;
-}
-
-nat rangoTSocio(TSocio socio){
-    return socio->rango;
 }
 
 char* nombreTSocio(TSocio socio){
@@ -88,6 +82,5 @@ TSocio copiarTSocio(TSocio socio){
         nuevoSocio->generosFavoritos[i] = socio->generosFavoritos[i];
     }
     nuevoSocio->generosTope = cantidadGenerosFavoritosTSocio(socio);
-    nuevoSocio->rango = rangoTSocio(socio);
     return nuevoSocio;
 }
